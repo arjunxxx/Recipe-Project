@@ -3,6 +3,7 @@ package com.technolearns.domain;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class Ingredient {
 	@ManyToOne
 	private Recipe recipe;
 	
-	@OneToOne
+	@OneToOne(fetch= FetchType.EAGER)
 	private UnitOfMeasure unitOfMeasure;
 
 	public Long getId() {
