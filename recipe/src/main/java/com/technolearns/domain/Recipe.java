@@ -4,6 +4,8 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,13 +27,17 @@ public class Recipe {
     private String url;
     private String directions;
     
+    @Enumerated(value =EnumType.STRING) // to say we need to save the string value of enum of the associated number
+    //in DB- Good Practice
+    private Difficulty difficulty;
+    
     @OneToOne(cascade = CascadeType.ALL)
     private Note note;
     
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "recipe")
     private Set<Ingredient> ingredients;
     
-    @Lob
+    @Lob // to store large objects in DB as BLOB or CLOB
     private Byte[] image;
     
     
@@ -100,6 +106,12 @@ public class Recipe {
 	}
 	public void setImage(Byte[] image) {
 		this.image = image;
+	}
+	public Difficulty getDifficulty() {
+		return difficulty;
+	}
+	public void setDifficulty(Difficulty difficulty) {
+		this.difficulty = difficulty;
 	}
     
     
