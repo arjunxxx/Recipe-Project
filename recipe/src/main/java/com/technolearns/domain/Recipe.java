@@ -9,7 +9,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 @Entity
@@ -26,6 +29,10 @@ public class Recipe {
     private String source;
     private String url;
     private String directions;
+    
+    @ManyToMany
+    @JoinTable(joinColumns = @JoinColumn(name="recipe_id") , inverseJoinColumns = @JoinColumn(name="category_id"))
+    private Set<Category> categories;
     
     @Enumerated(value =EnumType.STRING) // to say we need to save the string value of enum of the associated number
     //in DB- Good Practice
