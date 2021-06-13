@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -38,8 +39,11 @@ class IndexControllerTest {
 		when(recipeService.getRecipes()).thenReturn(recipies);
 		String indexPage = indexController.getIndexPage(model);
 		assertEquals(indexPage, "index");
+		ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 		verify(recipeService, times(1)).getRecipes();
-
+		verify(model, times(1)).addAttribute(org.mockito.ArgumentMatchers.eq("recipes"), argumentCaptor.capture());
+		Set<Recipe> setInController = argumentCaptor.getValue();
+		assertEquals(2, setInController.size());
 	}
 
 }
